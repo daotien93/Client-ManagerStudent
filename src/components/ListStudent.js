@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import EmployeeService from '../api/EmployeeService'
+import ApiStudentService  from '../api/StudentService'
 
-const ListEmployee = () => {
-    const [employees, setEmployees] = useState([])
+const ListStudent = () => {
+    const [students, setStudents] = useState([])
     const [inputValue, setInputValue] = useState('')
     const countPoint = 3
 
@@ -12,21 +12,20 @@ const ListEmployee = () => {
     }
 
     useEffect(() => {
-        getAllEmployees()
+        getAllStudents()
     }, [])
 
-    const getAllEmployees = () => {
-        EmployeeService.getEmployees().then((response) => {
-            setEmployees(response.data)
-            console.log(response.data)
-        }).then (error => {
+    const getAllStudents = () => {
+       ApiStudentService.getStudents().then((response) => {
+            setStudents(response.data)
+       }).catch(error => {
             console.log(error)
-        })
+       }) 
     }
 
-    const onDeleteEmployee = (employeeId) => {
-        EmployeeService.deleteEmployee(employeeId).then((response) => {
-            getAllEmployees(response.data)
+    const onDeleteStudent = (studentId) => {
+        ApiStudentService.deleteEmployee(studentId).then((response) => {
+            getAllStudents(response.data)
         }).catch(error => {
             console.log(error)
         })
@@ -34,8 +33,8 @@ const ListEmployee = () => {
 
     const onSearchPoint = (e, keyword) => {
         e.preventDeafault()
-        EmployeeService.searchEmployee(keyword).then((response) => {
-            getAllEmployees(response.data)
+        ApiStudentService.searchStudent(keyword).then((response) => {
+            getAllStudents(response.data)
         }).catch(error => {
             console.log(error)
         }) 
@@ -48,7 +47,7 @@ const ListEmployee = () => {
 
   return (
     <div className='container'>
-            <h2 className = 'text-center'> List Employees </h2>
+            <h2 className = 'text-center'> List students </h2>
             <div class='form-group mb-2'>
                             <input 
                                  type='text'
@@ -74,7 +73,7 @@ const ListEmployee = () => {
                                  onClick={onClearSerchInput}
                             >Clear</button>
             </div>
-            <Link to = '/add-employee' className = 'btn btn-primary mb-2' > Add Employee </Link>
+            <Link to = '/add-student' className = 'btn btn-primary mb-2' > Add Student </Link>
             <table className='table table-bordered table-striped'>
                 <thead>
                     <th> Full Name </th>
@@ -85,24 +84,24 @@ const ListEmployee = () => {
                 </thead>
                 <tbody>
                     {
-                        employees.map(
-                            employee =>
-                            <tr key = {employee.id}> 
-                                <td>{employee.fullName}</td>
-                                <td>{employee.pointNumberOne}</td>
-                                <td>{employee.pointNumberTwo}</td>
-                                <td>{employee.pointNumberThree}</td>
-                                <td>{(employee.pointNumberOne + employee.pointNumberTwo + employee.pointNumberThree) / countPoint}</td>
+                        students.map(
+                            student =>
+                            <tr key={student.id}> 
+                                <td>{student.fullName}</td>
+                                <td>{student.pointNumberOne}</td>
+                                <td>{student.pointNumberTwo}</td>
+                                <td>{student.pointNumberThree}</td>
+                                <td>{(student.pointNumberOne + student.pointNumberTwo + student.pointNumberThree) / countPoint}</td>
                                 <td>
                                     <Link 
                                         className='btn btn-info'
-                                        to={`/edit-employee/${employee.id}`
+                                        to={`/edit-student/${student.id}`
                                     }>
                                     Update
                                     </Link>
                                     <button 
                                         className = 'btn btn-danger'
-                                        onClick = {() => onDeleteEmployee(employee.id)
+                                        onClick = {() => onDeleteStudent(student.id)
                                     }
                                     style = {{marginLeft:'10px'}}>Delete</button>
                                 </td>
@@ -115,4 +114,4 @@ const ListEmployee = () => {
   )
 }
 
-export default ListEmployee
+export default ListStudent

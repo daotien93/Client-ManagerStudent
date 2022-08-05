@@ -1,8 +1,8 @@
 import React from 'react'
-import AddEmployee from '../components/AddEmployee'
+import AddStudent from '../components/AddStudent'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
-import ListEmployee  from '../components/ListEmployee'
+import ListStudent from '../components/ListStudent'
 
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 
@@ -13,10 +13,10 @@ const Home = () => {
       <Header />
       <div className='container'>
         <Routes>
-            <Route exact path="/" element={<ListEmployee/>}/>
-            <Route exact path="/employees" element={<ListEmployee/>}/>
-            <Route exact path="/add-employee" element={<AddEmployee/>}/>
-            <Route exact path="/edit-employee/:id" element={<AddEmployee/>}/>
+            <Route exact path="/" element={<ListStudent />}/>
+            <Route exact path="/students" element={<ListStudent />}/>
+            <Route exact path="/add-student" element={<AddStudent />}/>
+            <Route exact path="/edit-student/:id" element={<AddStudent />}/>
         </Routes>
       </div>
     </Router>

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import {Link, useNavigate, useParams } from 'react-router-dom'
-import EmployeeService from '../api/EmployeeService'
+import StudentService from '../api/StudentService'
 
-const AddEmployee = () => {
+const AddStudent = () => {
     const [fullName, setFullName] = useState('')
     const [pointNumberOne, setPointNumberOne] = useState('')
     const [pointNumberTwo, setPointNumberTwo] = useState('')
@@ -11,21 +11,21 @@ const AddEmployee = () => {
     const history = useNavigate()
     const {id} = useParams()
 
-    const saveOrUpdateEmployee = (e) => {
+    const saveUpdateStudent = (e) => {
         e.preventDefault()
 
-        const employee = { fullName, pointNumberOne, pointNumberTwo, pointNumberThree }
+        const student = { fullName, pointNumberOne, pointNumberTwo, pointNumberThree }
 
         if(id){
-            EmployeeService.updateEmployee(id, employee).then((response) => {
-                history.push('/employees')
+            StudentService.updateStudent(id, student).then((response) => {
+                history.push('/students')
             }).catch(error => {
                 console.log(error)
             })     
         } else {
-            EmployeeService.createEmployee(employee).then((response) =>{
+            StudentService.createEmployee(student).then((response) =>{
                 console.log(response.data)  
-                history.push('/employees')
+                history.push('/students')
     
             }).catch(error => {
                 console.log(error)
@@ -34,7 +34,7 @@ const AddEmployee = () => {
     }
 
     useEffect(() => {
-        EmployeeService.getEmployeeById(id).then((response) => {
+        StudentService.getStudent(id).then((response) => {
             setFullName(response.data.fullName)
             setPointNumberOne(response.data.pointNumberOne)
             setPointNumberTwo(response.data.pointNumberTwo)
@@ -46,9 +46,9 @@ const AddEmployee = () => {
 
     const title = () => {
         if (id) {
-            return <h2 className='text-align'>Update employee</h2>
+            return <h2 className='text-align'>Update student</h2>
         } else {
-            return <h2 className='text-align'>Add Employee</h2>
+            return <h2 className='text-align'>Add student</h2>
         }
     }
   return (
@@ -113,7 +113,7 @@ const AddEmployee = () => {
                                     </input>
                                 </div>
 
-                                <button className = 'btn btn-success' onClick = {(e) => saveOrUpdateEmployee(e)}>Submit </button>
+                                <button className = 'btn btn-success' onClick = {(e) => saveUpdateStudent(e)}>Submit </button>
                                 <Link to='/employees' className='btn btn-danger'> Cancel </Link>
                             </form>
 
@@ -127,4 +127,4 @@ const AddEmployee = () => {
   )
 }
 
-export default AddEmployee
+export default AddStudent
