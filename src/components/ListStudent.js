@@ -24,7 +24,7 @@ const ListStudent = () => {
     }
 
     const onDeleteStudent = (studentId) => {
-        ApiStudentService.deleteEmployee(studentId).then((response) => {
+        ApiStudentService.deleteStudent(studentId).then((response) => {
             getAllStudents(response.data)
         }).catch(error => {
             console.log(error)
